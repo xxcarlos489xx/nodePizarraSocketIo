@@ -10,7 +10,7 @@ const server = app.listen(PORTSOCKET,()=>{
 
 const io = socket(server,{
     cors: {
-        origin: "http://localhost:4200",
+        origin: "https://pizarra.dmqvirucida.com.pe/",
         methods: ["*"],
         secure: false
     }

@@ -6,17 +6,25 @@ const socket = require('socket.io');
 
 const io = socket(server,{
   cors: {
-      origin: "http://localhost:4200",
+    origin: [
+      "https://pizarra.dmqvirucida.com.pe",
+      "http://localhost:4200"
+    ],
       methods: ["GET", "POST"],
       credentials: false
     }
 })
 
 io.on('connection',(socket) => {
-    const idHandShake = socket.id;
-    const {nameRoom} = socket.handshake.query;
-    socket.join(nameRoom);
-    console.log(`Hola dispositivo ${idHandShake}, estas en la sala ${nameRoom}`);
+  console.log('device connected');
+  const idHandShake = socket.id;
+  const {nameRoom} = socket.handshake.query;
+  socket.join(nameRoom);
+  // console.log(socket.rooms);// ver id - name Room
+  console.log(`Hola dispositivo ${idHandShake}, estas en la sala ${nameRoom}`);
+  socket.on('event',(res)=>{
+      socket.to(nameRoom).emit('transmitiendo',res);
+  })
 })
 
 io.engine.on("connection_error", (err) => {

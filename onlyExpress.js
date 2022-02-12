@@ -4,13 +4,16 @@ const express = require('express');
 const app = express();
 const socket = require('socket.io');
 
-const server = app.listen(PORTSOCKET,()=>{
+const server = app.listen(PORTSOCKET || 3000,()=>{
     console.log(`Servidor iniciado en el puerto ${PORTSOCKET}`);
 });
 
 const io = socket(server,{
     cors: {
-        origin: "https://pizarra.dmqvirucida.com.pe/",
+        origin: [
+            "https://pizarra.dmqvirucida.com.pe",
+            "http://localhost:4200"
+        ],
         methods: ["*"],
         secure: false
     }
